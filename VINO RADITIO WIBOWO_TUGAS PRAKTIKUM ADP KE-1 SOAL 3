@@ -1,0 +1,22 @@
+program Menghitung_Luas_Permukaan_Balok;
+uses crt;
+var
+    Panjang, Lebar, Tinggi,Luas:real;
+begin
+  Writeln('Nama=Vino Raditio Wibowo') ;
+  Writeln('NIM=2310431034') ;
+  Writeln('Shift=1') ;
+  Writeln('=========================================') ;
+  Writeln('Program Menghitung Luas Permukaan Balok') ;
+  Writeln('=========================================') ;
+  Write('Panjang=') ;
+  Readln(Panjang) ;
+  Write('Lebar=') ;
+  Readln(Lebar) ;
+  Write('Tinggi=') ;
+  Readln(Tinggi) ;
+  Luas:=2*((Panjang*Lebar)+(Panjang*Tinggi)+(Lebar*Tinggi)) ;
+  Write('Luas Permukaan Balok=',Luas) ;
+end.
+
+
