@@ -1,0 +1,20 @@
+program Perkalian_Sederhana;
+uses crt;
+var 
+    Bilangan_Pertama, Bilangan_Kedua, Hasil_Perkalian, Perkalian: real;
+begin
+  Writeln('Nama=VINO RADITIO WIBOWO') ;
+  Writeln('NIM=2310431034') ;
+  Writeln('Shift=1') ;
+  Writeln(' ') ;
+  Writeln('=============================') ;
+  Writeln('Program Perkalian Sederhana') ;
+  Writeln('=============================') ;
+  Writeln(' ') ;
+  Write('Bilangan_Pertama=') ;
+  Readln(Bilangan_Pertama) ;
+  Write('Bilangan_Kedua=') ;
+  Readln(Bilangan_Kedua) ;
+  Perkalian:=Bilangan_Pertama*Bilangan_Kedua;
+  Writeln('Hasil_Perkalian=', Perkalian);
+end.
