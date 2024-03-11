@@ -1,0 +1,16 @@
+program Menghitung_Volume_Bola;
+uses crt;
+var
+    Pi,Jarijari,Volume_Bola:real;
+begin
+  Writeln('Nama=Vino Raditio Wibowo') ;
+  Writeln('Nim=2310431034') ;
+  Writeln('Shift=1') ;
+  Writeln('=================================') ;
+  Writeln('Program Menghitung Volume Bola') ;
+  Writeln('=================================') ;
+  Write('jarijari=') ;
+  Readln(jarijari) ;
+  Volume_Bola:=4/3*Pi*jarijari;
+  Write('Volume Bola=',Volume_Bola) ;
+end.
