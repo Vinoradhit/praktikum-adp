@@ -1,0 +1,92 @@
+program PenjumlahanPerkalian;
+
+var
+  N, X, Y: integer;
+  Menu: string;
+  ValidMenu, ValidN: boolean;
+
+begin
+  writeln('Nama: VINO RADITIO WIBOWO');
+  writeln('NIM: 2310431034');
+  writeln('Shift: 1');
+  writeln('===================================================');
+  writeln('Selamat Datang di Program Penjumlahan dan Perkalian');
+
+  ValidMenu := false;
+
+  while not ValidMenu do
+  begin
+    writeln('Menu');
+    writeln('1. Tabel Perkalian');
+    writeln('2. Tabel Penjumlahan');
+    writeln('3. Keluar');
+    write('Pilih menu : ');
+    readln(Menu);
+
+    if (Menu = '1') or (Menu = '2') or (Menu = '3') then
+      ValidMenu := true
+    else
+      writeln('Input tidak valid. Silakan masukkan angka 1, 2, atau 3.');
+  end;
+
+  if Menu = '1' then
+  begin
+    ValidN := false;
+    while not ValidN do
+    begin
+      write('Masukkan nilai n : ');
+      readln(N);
+      if (N >= 1) and (N <= 10) then
+        ValidN := true
+      else
+        writeln('Masukkan nilai n sesuai rentang 1-10');
+    end;
+
+    writeln('Tabel Perkalian');
+    writeln('--------------------------------------------------------');
+    write('| X ':5);
+    for X := 1 to N do
+      write('| ', X:3);
+    writeln('|');
+    writeln('--------------------------------------------------------');
+    for X := 1 to N do
+    begin
+      write('| ', X:3);
+      for Y := 1 to N do
+        write('| ', (X * Y):3);
+      writeln('|');
+    end;
+    writeln('--------------------------------------------------------');
+  end
+  else if Menu = '2' then
+  begin
+    ValidN := false;
+    while not ValidN do
+    begin
+      write('Masukkan nilai n : ');
+      readln(N);
+      if (N >= 1) and (N <= 10) then
+        ValidN := true
+      else
+        writeln('Masukkan nilai n sesuai rentang 1-10');
+    end;
+
+    writeln('Tabel Penjumlahan');
+    writeln('---------------------------------------------------------');
+    write('| + ':5);
+    for X := 1 to N do
+      write('| ', X:3);
+    writeln('|');
+    writeln('---------------------------------------------------------');
+    for X := 1 to N do
+    begin
+      write('| ', X:3);
+      for Y := 1 to N do
+        write('| ', (X + Y):3);
+      writeln('|');
+    end;
+    writeln('---------------------------------------------------------');
+  end
+  else if Menu = '3' then
+    writeln('keluar');
+end.
