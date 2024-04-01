@@ -1,0 +1,33 @@
+program SegitigaAngka;
+
+var
+  tinggi, baris, angka: integer;
+
+begin
+  writeln('Nama: VINO RADITIO WIBOWO');
+  writeln('NIM: 2310431034');
+  writeln('Shift: 1');
+  writeln('=============================================');
+  writeln('Selamat Datang di Program Pola Segitiga Angka');
+  writeln('==============================================');
+  writeln() ;
+  write('Masukkan tinggi segitiga: ');
+  readln(tinggi);
+  writeln() ;
+  
+  
+  if tinggi >= 0 then
+  begin  
+  for baris := 1 to tinggi do
+    begin
+      for angka :=  1 to baris do
+      begin
+      write(angka);
+      end;
+      writeln;
+    end
+    end
+    else
+    writeln('Kesalahan dalam Penginputan Tinggi. Tinggi segitiga harus merupakan bilangan bulat positif.');
+       
+      end. 
