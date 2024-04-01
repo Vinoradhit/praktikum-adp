@@ -1,0 +1,21 @@
+print("NAMA: VINO RADITIO WIBOWO")
+print("NIM: 2310431034")
+print("SHIFT: 1")
+print("")
+
+bilangan = int(input("Masukkan bilangan bulat positif: "))
+
+faktor = 0
+for i in range(1, bilangan):
+    if bilangan % i == 0:
+        faktor += i
+
+if faktor == bilangan:
+    print(f"{bilangan} adalah bilangan sempurna.")
+else:
+    print(f"{bilangan} bukan bilangan sempurna.")
+
+if bilangan % 2 == 0:
+    print(f"{bilangan} adalah bilangan genap")
+else:
+    print(f"{bilangan} adalah bilangan ganjil")
