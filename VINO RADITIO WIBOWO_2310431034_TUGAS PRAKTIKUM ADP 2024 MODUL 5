@@ -1,0 +1,18 @@
+print('================================')
+print('NAMA: VINO RADITIO WIBOWO')
+print('NIM: 2310431034')
+print('SHIFT: 1')
+print('================================')
+abjad = 'abcdefghijklmnopqrstuvwxyz'
+k = int(input('Masukkan K dari 1 hingga 26: '))
+if k in range(1, 27):
+    teks = input('Teks yang dienkripsi: ').lower()
+    cipher = ''
+    for huruf in teks:
+        if huruf in abjad:
+            cipher += abjad[(abjad.index(huruf) + k) % 26]
+        else:
+            cipher += huruf
+    print('Hasil enkripsi:', cipher)
+else:
+    print('Terjadi kesalahan. Mohon input k sesuai rentang 1≤k≤26')
