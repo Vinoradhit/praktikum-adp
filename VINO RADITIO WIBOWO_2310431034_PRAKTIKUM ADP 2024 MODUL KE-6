@@ -1,0 +1,57 @@
+Jadwal_Penerbangan = [
+    ["Bali", "Surabaya", "08:30", "09:30"],
+    ["Surabaya", "Bali", "08:00", "09:00"],
+    ["Padang", "Jakarta", "10:00", "11:45"],
+    ["Jakarta", "Padang", "07:00", "08:45"],
+    ["Jakarta", "Surabaya", "08:30", "10:00"],
+    ["Surabaya", "Jakarta", "07:30", "09:00"],
+    ["Jakarta", "Bali", "08:00", "10:00"],
+    ["Bali", "Jakarta", "18:00", "20:30"],
+    ["Padang", "Surabaya", "08:00", "10:30"],
+    ["Surabaya", "Padang", "09:00", "11:30"],
+    ["Padang", "Bali", "10:00", "14:45"],
+    ["Bali", "Jakarta", "09:00", "13:45"]
+]
+
+print("Jadwal Penerbangan:")
+print("=====================================================================")
+print("| Kota Asal  | Kota Tujuan | Waktu Keberangkatan | Waktu Kedatangan |")
+print("=====================================================================")
+for i in Jadwal_Penerbangan:
+    print("| {:<10} | {:<11} | {:<19} | {:<16} |".format(i[0], i[1], i[2], i[3]))
+print("=====================================================================")
+
+asal1 = input("Masukkan kota asal pertama: ")
+tujuan1 = input("Masukkan kota tujuan pertama: ")
+
+asal2 = input("Masukkan kota asal kedua: ")
+tujuan2 = input("Masukkan kota tujuan kedua: ")
+
+rute_tercepat1 = rute_tercepat2 = []
+waktu_tercepat1 = waktu_tercepat2 =  24 * 60  
+
+for rute in Jadwal_Penerbangan:
+    if (rute[0] == asal1 and rute[1] == tujuan1) or (rute[0] == asal2 and rute[1] == tujuan2):
+        waktu_keberangkatan = rute[2]
+        waktu_kedatangan = rute[3]
+        jam_keberangkatan = int(waktu_keberangkatan[:2])
+        menit_keberangkatan = int(waktu_keberangkatan[3:])
+        jam_kedatangan = int(waktu_kedatangan[:2])
+        menit_kedatangan = int(waktu_kedatangan[3:])
+        total_perjalanan = (jam_kedatangan - jam_keberangkatan) * 60 + (menit_kedatangan - menit_keberangkatan)
+        if (rute[0] == asal1 and rute[1] == tujuan1) and total_perjalanan < waktu_tercepat1:
+            waktu_tercepat1 = total_perjalanan
+            rute_tercepat1 = rute
+        elif (rute[0] == asal2 and rute[1] == tujuan2) and total_perjalanan < waktu_tercepat2:
+            waktu_tercepat2 = total_perjalanan
+            rute_tercepat2 = rute
+
+
+if waktu_tercepat1 < waktu_tercepat2:
+    print("Rute tercepat adalah dengan penerbangan dari {} ke {} dengan waktu tempuh {} jam {} menit.".format(
+        rute_tercepat1[0], rute_tercepat1[1], waktu_tercepat1 // 60, waktu_tercepat1 % 60))
+elif waktu_tercepat1 > waktu_tercepat2:
+    print("Rute tercepat adalah dengan penerbangan dari {} ke {} dengan waktu tempuh {} jam {} menit.".format(
+        rute_tercepat2[0], rute_tercepat2[1], waktu_tercepat2 // 60, waktu_tercepat2 % 60))
+else:
+    print("Keduanya memiliki waktu tempuh sama karena jaraknya sama.")
