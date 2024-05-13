@@ -1,0 +1,58 @@
+jadwal = []
+
+def tambah_kegiatan():
+    waktu_mulai = input("Masukkan waktu mulai dengan format (Jam:Menit): ")
+    waktu_selesai = input("Masukkan waktu selesai dengan format (Jam:Menit): ")
+    deskripsi = input("Masukkan deskripsi kegiatan: ")
+    kegiatan_baru = (waktu_mulai, waktu_selesai, deskripsi)
+    jadwal.append(kegiatan_baru)
+    print("Kegiatan berhasil ditambahkan!")
+
+def hapus_kegiatan():
+    if jadwal:
+        print("Pilih nomor kegiatan yang ingin dihapus:")
+        tampilkan_jadwal()
+        nomor_kegiatan = int(input("Masukkan nomor kegiatan: "))
+        if nomor_kegiatan >= 1 and nomor_kegiatan <= len(jadwal):
+            del jadwal[nomor_kegiatan - 1]
+            print("Kegiatan berhasil dihapus!")
+        else:
+            print("Nomor kegiatan tidak valid.")
+    else:
+        print("Jadwal harian kosong.")
+
+def tampilkan_jadwal():
+    if jadwal:
+        print("Jadwal Harian:")
+        print("-------------------------------------------------------------------------------------")
+        print("| No.  | Waktu Mulai  | Waktu Selesai |                    Deskripsi                |")
+        print("-------------------------------------------------------------------------------------")
+        for index, kegiatan in enumerate(jadwal, start=1):
+            waktu_mulai, waktu_selesai, deskripsi = kegiatan
+            print(f"| {index:<5}| {waktu_mulai:<13}| {waktu_selesai:<14}| {deskripsi:<44}|")
+        print("-------------------------------------------------------------------------------------")
+    else:
+        print("Jadwal harian kosong.")
+
+def tampilkan_menu():
+    print("\nPilih tindakan:")
+    print("1. Tambah Kegiatan")
+    print("2. Hapus Kegiatan")
+    print("3. Tampilkan Jadwal")
+    print("4. Keluar")
+
+while True:
+    tampilkan_menu()
+    pilihan = input("Masukkan pilihan: ")
+
+    if pilihan == "1":
+        tambah_kegiatan()
+    elif pilihan == "2":
+        hapus_kegiatan()
+    elif pilihan == "3":
+        tampilkan_jadwal()
+    elif pilihan == "4":
+        print("Terima kasih telah menggunakan program ini.")
+        break
+    else:
+        print("Pilihan tidak valid. Silakan pilih lagi.")
