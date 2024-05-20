@@ -7,7 +7,6 @@ def tampilkan_data_pasien(data):
     if not data:
         print("Tidak ada data pasien.")
     else:
-        # Membuat header tabel
         print("+-----------------+-------+-----------------+----------------+-------------------+------------------------+")
         print("|      Nama       | Umur  |  Jenis Kelamin  | Golongan Darah | Riwayat Penyakit  |       Daftar Obat       |")
         print("+-----------------+-------+-----------------+----------------+-------------------+------------------------+")
@@ -45,14 +44,11 @@ def hapus_data_pasien(data):
     else:
         print("Data pasien tidak ditemukan.")
 
-# Inisialisasi data
 data = {}
 
-# Membuat file kosong jika belum ada
 with open('data_pasien.txt', 'a'):
     pass
 
-# Membaca data dari file
 with open('data_pasien.txt', 'r') as file:
     for line in file:
         line = line.strip()
