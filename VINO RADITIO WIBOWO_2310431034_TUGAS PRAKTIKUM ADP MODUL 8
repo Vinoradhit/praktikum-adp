@@ -1,0 +1,88 @@
+def save_data(data):
+    with open('data_pasien.txt', 'w') as file:
+        for nama, info in data.items():
+            file.write(f"{nama}|{info['umur']}|{info['jenis_kelamin']}|{info['golongan_darah']}|{info['riwayat_penyakit']}|{info['daftar_obat']}\n")
+
+def tampilkan_data_pasien(data):
+    if not data:
+        print("Tidak ada data pasien.")
+    else:
+        # Membuat header tabel
+        print("+-----------------+-------+-----------------+----------------+-------------------+------------------------+")
+        print("|      Nama       | Umur  |  Jenis Kelamin  | Golongan Darah | Riwayat Penyakit  |       Daftar Obat       |")
+        print("+-----------------+-------+-----------------+----------------+-------------------+------------------------+")
+        # Membuat baris data pasien
+        for key, value in data.items():
+            print(f"| {key:<15} | {value['umur']:<5} | {value['jenis_kelamin']:<15} | {value['golongan_darah']:<14} | {value['riwayat_penyakit']:<17} | {value['daftar_obat']:<22} |")
+        # Membuat footer tabel
+        print("+-----------------+-------+-----------------+----------------+-------------------+------------------------+")
+
+def tambah_data_pasien(data):
+    nama = input("Masukkan Nama: ")
+    umur = input("Masukkan Umur: ")
+    jenis_kelamin = input("Masukkan Jenis Kelamin: ")
+    golongan_darah = input("Masukkan Golongan Darah: ")
+    riwayat_penyakit = input("Masukkan Riwayat Penyakit: ")
+    daftar_obat = input("Masukkan Daftar Obat: ")
+    
+    data[nama] = {
+        'nama': nama,
+        'umur': umur,
+        'jenis_kelamin': jenis_kelamin,
+        'golongan_darah': golongan_darah,
+        'riwayat_penyakit': riwayat_penyakit,
+        'daftar_obat': daftar_obat
+    }
+    save_data(data)
+    print("Data pasien berhasil ditambahkan!")
+
+def hapus_data_pasien(data):
+    nama = input("Masukkan Nama Pasien yang ingin dihapus: ")
+    if nama in data:
+        del data[nama]
+        save_data(data)
+        print("Data pasien berhasil dihapus!")
+    else:
+        print("Data pasien tidak ditemukan.")
+
+# Inisialisasi data
+data = {}
+
+# Membuat file kosong jika belum ada
+with open('data_pasien.txt', 'a'):
+    pass
+
+# Membaca data dari file
+with open('data_pasien.txt', 'r') as file:
+    for line in file:
+        line = line.strip()
+        if line:
+            nama, umur, jenis_kelamin, golongan_darah, riwayat_penyakit, daftar_obat = line.split('|')
+            data[nama] = {
+                'nama': nama,
+                'umur': umur,
+                'jenis_kelamin': jenis_kelamin,
+                'golongan_darah': golongan_darah,
+                'riwayat_penyakit': riwayat_penyakit,
+                'daftar_obat': daftar_obat
+            }
+
+while True:
+    print("\nMenu:")
+    print("1. Tampilkan Data Pasien")
+    print("2. Tambah Data Pasien")
+    print("3. Hapus Data Pasien")
+    print("4. Keluar")
+    
+    pilihan = input("Pilih menu: ")
+    
+    if pilihan == '1':
+        tampilkan_data_pasien(data)
+    elif pilihan == '2':
+        tambah_data_pasien(data)
+    elif pilihan == '3':
+        hapus_data_pasien(data)
+    elif pilihan == '4':
+        break
+    else:
+        print("Pilihan tidak valid. Silakan coba lagi.")
