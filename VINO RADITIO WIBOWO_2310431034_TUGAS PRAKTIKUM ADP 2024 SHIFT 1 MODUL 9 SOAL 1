@@ -1,0 +1,13 @@
+from termcolor import cprint
+import os
+
+os.system('cls')
+
+for i in range(3):
+    cprint(" "*25,"red","on_red",end="")
+    print(' '*2,end='')
+    print()
+for i in range(3):
+    cprint(' '*25,'white','on_white',end='')
+    print(' '*2,end='')
+    print()
