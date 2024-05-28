@@ -1,0 +1,31 @@
+from termcolor import colored,cprint
+import os
+
+os.system('cls')
+
+cprint("    /===============================\\", 'red')
+cprint("   /=================================\\", 'red')
+cprint("  /===================================\\", 'red')
+cprint(" /=====================================\\", 'red')
+cprint("/=======================================\\", 'red')
+
+for i in range(2):
+    cprint(' ###'*10,'white')
+
+for i in range(2):
+    cprint(' ###', 'white', end='')
+    cprint(' |     | ', 'white', end='')
+    cprint('### ### ### ###', 'white', end='')
+    cprint(' |     | ', 'white', end='')
+    cprint('###', 'white')
+
+cprint(' ' * 41, 'grey', 'on_dark_grey')
+
+for i in range(4):
+    cprint(' ###' * 4, 'blue', end='')
+    print(' ', end='')
+    cprint('|     |', 'white', end='')
+    print('', end='')
+    cprint(' ###' * 4, 'blue')
+
+cprint(' ' * 41, 'grey','on_dark_grey')
