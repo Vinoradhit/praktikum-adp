@@ -1,0 +1,223 @@
+import os
+from termcolor import colored, cprint
+import time
+
+kompetisi = str(input('Nama kompetisi = '))
+riwayat_pertandingan = []
+
+header_klasemen = [['Pos', 'Tim', 'MA', 'M', 'S', 'K', 'GM', 'GA', 'GD', 'Pts', 'Disc']]
+header_topskor = ['Nama Pemain', 'Gol']
+
+def hitung_poin_kedisiplinan(kuning, merah, merah_langsung):
+    return kuning + (3 * merah) + (4 * merah_langsung)
+
+def tampilkan_klasemen(klasemen):
+    os.system('cls')
+    for i in range(len(klasemen)):
+        for j in range(i + 1, len(klasemen)):
+            if (klasemen[i]['Pts'] < klasemen[j]['Pts'] or
+                (klasemen[i]['Pts'] == klasemen[j]['Pts'] and klasemen[i]['GD'] < klasemen[j]['GD']) or
+                (klasemen[i]['Pts'] == klasemen[j]['Pts'] and klasemen[i]['GD'] == klasemen[j]['GD'] and klasemen[i]['GM'] < klasemen[j]['GM']) or
+                (klasemen[i]['Pts'] == klasemen[j]['Pts'] and klasemen[i]['GD'] == klasemen[j]['GD'] and klasemen[i]['GM'] == klasemen[j]['GM'] and klasemen[i]['poin_kedisiplinan'] > klasemen[j]['poin_kedisiplinan']) or
+                (klasemen[i]['Pts'] == klasemen[j]['Pts'] and klasemen[i]['GD'] == klasemen[j]['GD'] and klasemen[i]['GM'] == klasemen[j]['GM'] and klasemen[i]['poin_kedisiplinan'] == klasemen[j]['poin_kedisiplinan'] and klasemen[i]['nama'] > klasemen[j]['nama'])):
+                klasemen[i], klasemen[j] = klasemen[j], klasemen[i]
+
+    print("Klasemen", kompetisi)
+    cprint(f"{header_klasemen[0][0]:<4} {header_klasemen[0][1]:<15} {header_klasemen[0][2]:<3} {header_klasemen[0][3]:<3} {header_klasemen[0][4]:<3} {header_klasemen[0][5]:<3} {header_klasemen[0][6]:<3} {header_klasemen[0][7]:<3} {header_klasemen[0][8]:<3} {header_klasemen[0][9]:<3} {header_klasemen[0][10]:<5}", 'white', 'on_blue')
+
+    for i in range(len(klasemen)):
+        pos = i + 1
+        tim_str = f"{pos:<4} {klasemen[i]['nama']:<15} {klasemen[i]['MA']:<3} {klasemen[i]['M']:<3} {klasemen[i]['S']:<3} {klasemen[i]['K']:<3} {klasemen[i]['GM']:<3} {klasemen[i]['GA']:<3} {klasemen[i]['GD']:<3} {klasemen[i]['Pts']:<3} {klasemen[i]['poin_kedisiplinan']:<5}"
+        if pos == 1:
+            cprint(tim_str, 'white', 'on_green')
+        else:
+            cprint(tim_str, 'black', 'on_white')
+
+def cari_tim(klasemen, nama_tim):
+    for tim in klasemen:
+        if tim['nama'] == nama_tim:
+            return tim
+    return None
+
+def cari_tambah_pencetak_gol(topsksor, nama_pemain, gol):
+    for pemain in topsksor:
+        if pemain['nama'] == nama_pemain:
+            pemain['gol'] += gol
+            return
+    topsksor.append({'nama': nama_pemain, 'gol': gol})
+
+def urutkan_topskor(item):
+    return (item['gol'], item['nama'])
+
+def tampilkan_topskor(topsksor):
+    topsksor.sort(key=urutkan_topskor, reverse=True)
+    print('Top Skor')
+    cprint(f"{header_topskor[0]:<20} {header_topskor[1]:<3}", 'white', 'on_blue')
+    for i, pemain in enumerate(topsksor):
+        if i == 0:
+            cprint(f"{pemain['nama']:<20} {pemain['gol']:<3}", 'white', 'on_green')
+        else:
+            cprint(f"{pemain['nama']:<20} {pemain['gol']:<3}", 'black', 'on_white')
+
+def tambahkan_hasil_pertandingan(klasemen, topsksor, tim1, tim2, skor1, skor2, kuning1, merah1, merah_langsung1, kuning2, merah2, merah_langsung2):
+    data_tim1 = cari_tim(klasemen, tim1)
+    data_tim2 = cari_tim(klasemen, tim2)
+
+    if data_tim1 is None:
+        print(f"Tim {tim1} tidak ditemukan dalam klasemen.")
+        return
+
+    if data_tim2 is None:
+        print(f"Tim {tim2} tidak ditemukan dalam klasemen.")
+        return
+
+    data_tim1['MA'] += 1
+    data_tim2['MA'] += 1
+    data_tim1['GM'] += skor1
+    data_tim2['GM'] += skor2
+    data_tim1['GA'] += skor2
+    data_tim2['GA'] += skor1
+    data_tim1['GD'] = data_tim1['GM'] - data_tim1['GA']
+    data_tim2['GD'] = data_tim2['GM'] - data_tim2['GA']
+
+    if skor1 > skor2:
+        data_tim1['M'] += 1
+        data_tim2['K'] += 1
+        data_tim1['Pts'] += 3
+    elif skor1 < skor2:
+        data_tim2['M'] += 1
+        data_tim1['K'] += 1
+        data_tim2['Pts'] += 3
+    else:
+        data_tim1['S'] += 1
+        data_tim2['S'] += 1
+        data_tim1['Pts'] += 1
+        data_tim2['Pts'] += 1
+
+    data_tim1['poin_kedisiplinan'] += hitung_poin_kedisiplinan(kuning1, merah1, merah_langsung1)
+    data_tim2['poin_kedisiplinan'] += hitung_poin_kedisiplinan(kuning2, merah2, merah_langsung2)
+
+    pencetak_gol1 = {}
+    for i in range(skor1):
+        pencetak = input(f"Masukkan pencetak gol {tim1}: ")
+        if pencetak in pencetak_gol1:
+            pencetak_gol1[pencetak] += 1
+        else:
+            pencetak_gol1[pencetak] = 1
+
+    pencetak_gol2 = {}
+    for i in range(skor2):
+        pencetak = input(f"Masukkan pencetak gol {tim2}: ")
+        if pencetak in pencetak_gol2:
+            pencetak_gol2[pencetak] += 1
+        else:
+            pencetak_gol2[pencetak] = 1
+
+    for pemain, gol in pencetak_gol1.items():
+        cari_tambah_pencetak_gol(topsksor, pemain, gol)
+
+    for pemain, gol in pencetak_gol2.items():
+        cari_tambah_pencetak_gol(topsksor, pemain, gol)
+
+    riwayat_pertandingan.append({
+        'tim1': tim1,
+        'tim2': tim2,
+        'skor1': skor1,
+        'skor2': skor2,
+        'kuning1': kuning1,
+        'merah1': merah1,
+        'merah_langsung1': merah_langsung1,
+        'kuning2': kuning2,
+        'merah2': merah2,
+        'merah_langsung2': merah_langsung2,
+    })
+
+def tampilkan_riwayat_pertandingan():
+    os.system('cls')
+    print("Riwayat Pertandingan")
+    for i in range(len(riwayat_pertandingan)):
+        pertandingan = riwayat_pertandingan[i]
+        print(f"Pertandingan {i + 1}:")
+        print(f"{pertandingan['tim1']} vs {pertandingan['tim2']}")
+        print(f"Skor: {pertandingan['skor1']} - {pertandingan['skor2']}")
+        print(f"Kartu {pertandingan['tim1']}: Kuning={pertandingan['kuning1']}, Merah Tidak Langsung={pertandingan['merah1']}, Merah Langsung={pertandingan['merah_langsung1']}")
+        print(f"Kartu {pertandingan['tim2']}: Kuning={pertandingan['kuning2']}, Merah Tidak Langsung={pertandingan['merah2']}, Merah Langsung={pertandingan['merah_langsung2']}")
+        print()
+
+    input("Tekan Enter untuk kembali ke menu utama...")
+
+os.system('cls')
+
+jumlah_tim = int(input("Masukkan jumlah tim: ")) 
+klasemen = []
+topsksor = []
+
+for i in range(jumlah_tim):
+    nama_tim = input("Masukkan nama tim: ")
+    klasemen.append({
+        'nama': nama_tim,
+        'MA': 0,
+        'M': 0,
+        'S': 0,
+        'K': 0,
+        'GM': 0,
+        'GA': 0,
+        'GD': 0,
+        'Pts': 0,
+        'poin_kedisiplinan': 0
+    })
+
+print("Pilih jenis kompetisi:")
+print("1. Single leg")
+print("2. Double leg")
+jenis_kompetisi = input("Pilih jenis kompetisi (1 atau 2): ")
+
+if jenis_kompetisi == '1':
+    total_pertandingan = jumlah_tim * (jumlah_tim - 1) // 2
+elif jenis_kompetisi == '2':
+    total_pertandingan = 2 * (jumlah_tim * (jumlah_tim - 1) // 2)
+else:
+    print("Pilihan tidak valid. Hanya dapat memilih 1 (single leg) atau 2 (double leg).")
+    exit()
+
+pertandingan_dilakukan = 0
+
+while pertandingan_dilakukan < total_pertandingan:
+    tampilkan_klasemen(klasemen)
+    print()
+    tampilkan_topskor(topsksor)
+    tim1 = input("Masukkan nama tim 1: ")
+    tim2 = input("Masukkan nama tim 2: ")
+    skor1 = int(input(f"Masukkan skor untuk {tim1}: "))
+    skor2 = int(input(f"Masukkan skor untuk {tim2}: "))
+
+    kuning1 = int(input(f"Masukkan jumlah kartu kuning untuk {tim1}: "))
+    merah1 = int(input(f"Masukkan jumlah kartu merah tidak langsung untuk {tim1}: "))
+    merah_langsung1 = int(input(f"Masukkan jumlah kartu merah langsung untuk {tim1}: "))
+
+    kuning2 = int(input(f"Masukkan jumlah kartu kuning untuk {tim2}: "))
+    merah2 = int(input(f"Masukkan jumlah kartu merah tidak langsung untuk {tim2}: "))
+    merah_langsung2 = int(input(f"Masukkan jumlah kartu merah langsung untuk {tim2}: "))
+
+    tambahkan_hasil_pertandingan(klasemen, topsksor, tim1, tim2, skor1, skor2, kuning1, merah1, merah_langsung1, kuning2, merah2, merah_langsung2)
+
+    pertandingan_dilakukan += 1
+
+    while True:
+        print("\nMenu:")
+        print("1. Tampilkan riwayat pertandingan")
+        print("2. Lanjutkan input pertandingan berikutnya")
+        pilihan = input("Pilih menu: ")
+
+        if pilihan == '1':
+            tampilkan_riwayat_pertandingan()
+        elif pilihan == '2':
+            break
+        else:
+            print("Pilihan tidak valid. Silakan pilih 1 atau 2.")
+
+tampilkan_klasemen(klasemen)
+print()
+tampilkan_topskor(topsksor)
+
+input("Tekan Enter untuk keluar...")
